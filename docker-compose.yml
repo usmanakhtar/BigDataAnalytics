@@ -1,0 +1,11 @@
+version: '3'
+services:
+  bigdata:
+    build: .
+    container_name: bigdata-tutorial
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./workspace:/home/jovyan/work   # Persist Jupyter Notebooks & PySpark scripts
+      - ./data:/home/jovyan/data         # Store datasets used in PySpark
+    restart: always

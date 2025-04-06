@@ -17,7 +17,7 @@ This project provides a ready-to-use environment for Big Data Analytics using **
 
 ## 🐳 Getting Started with Docker
 
-### 1. Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/usmanakhtar/BigDataAnalytics.git

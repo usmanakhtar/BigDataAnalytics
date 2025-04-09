@@ -1,0 +1,6 @@
+"name,age,gender,salary"
+"Alice,34,Female,85000"
+"Bob,,Male,56000"
+"Charlie,29,,70000"
+"Diana,NaN,Female,"
+"Eve,45,Female,91000"

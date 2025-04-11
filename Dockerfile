@@ -10,7 +10,7 @@ ENV PYSPARK_DRIVER_PYTHON_OPTS="lab --ip=0.0.0.0 --port=8888 --allow-root --no-b
 WORKDIR /home/jovyan/work
 
 # Install PySpark and any other necessary Python packages
-RUN pip install pyspark
+# RUN pip install pyspark
 
 # Register PySpark kernel in user path (not system-wide)
 RUN /opt/conda/bin/python -m ipykernel install --user --name pyspark --display-name "PySpark"

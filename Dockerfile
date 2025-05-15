@@ -13,17 +13,17 @@ ENV PYSPARK_DRIVER_PYTHON_OPTS="lab --ip=0.0.0.0 --port=8888 --allow-root --no-b
 WORKDIR /home/jovyan/work
 
 # Install Hive and its dependencies
-RUN apt-get update && \
-    apt-get install -y wget && \
-    wget https://downloads.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz && \
-    tar -xzf apache-hive-3.1.3-bin.tar.gz && \
-    mv apache-hive-3.1.3-bin /opt/hive && \
-    rm apache-hive-3.1.3-bin.tar.gz && \
-    apt-get clean
+#RUN apt-get update && \
+  #  apt-get install -y wget && \
+  #  wget https://downloads.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz && \
+   # tar -xzf apache-hive-3.1.3-bin.tar.gz && \
+   # mv apache-hive-3.1.3-bin /opt/hive && \
+   # rm apache-hive-3.1.3-bin.tar.gz && \
+    #apt-get clean
 
 # Set Hive environment variables
-ENV HIVE_HOME=/opt/hive
-ENV PATH=$PATH:$HIVE_HOME/bin
+#ENV HIVE_HOME=/opt/hive
+#ENV PATH=$PATH:$HIVE_HOME/bin
 
 # Switch back to the jovyan user
 USER jovyan

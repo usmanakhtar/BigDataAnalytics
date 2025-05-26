@@ -1,38 +1,34 @@
-# Use the official Jupyter PySpark Notebook image as the base image
+# Use Jupyter PySpark Notebook as base
 FROM jupyter/pyspark-notebook:latest
 
-# Switch to root user to install packages
+# Switch to root to install Spark
 USER root
 
-# Set environment variables for PySpark
+# Install dependencies
+RUN apt-get update && apt-get install -y curl openjdk-11-jdk && apt-get clean
+
+# Set environment variable for Java
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+# Download and install Spark 3.3.0 with Hadoop 3
+RUN curl -L https://archive.apache.org/dist/spark/spark-3.3.0/spark-3.3.0-bin-hadoop3.tgz | tar xz -C /opt/ && \
+    mv /opt/spark-3.3.0-bin-hadoop3 /opt/spark
+
+# Set Spark environment variables
+ENV SPARK_HOME=/opt/spark
+ENV PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
 ENV PYSPARK_PYTHON=python3
 ENV PYSPARK_DRIVER_PYTHON=jupyter
 ENV PYSPARK_DRIVER_PYTHON_OPTS="lab --ip=0.0.0.0 --port=8888 --allow-root --no-browser"
 
-# Set the working directory in the container
+# Create working directory
 WORKDIR /home/jovyan/work
 
-# Install Hive and its dependencies
-#RUN apt-get update && \
-  #  apt-get install -y wget && \
-  #  wget https://downloads.apache.org/hive/hive-3.1.3/apache-hive-3.1.3-bin.tar.gz && \
-   # tar -xzf apache-hive-3.1.3-bin.tar.gz && \
-   # mv apache-hive-3.1.3-bin /opt/hive && \
-   # rm apache-hive-3.1.3-bin.tar.gz && \
-    #apt-get clean
-
-# Set Hive environment variables
-#ENV HIVE_HOME=/opt/hive
-#ENV PATH=$PATH:$HIVE_HOME/bin
-
-# Switch back to the jovyan user
+# Switch back to default user
 USER jovyan
 
-# Install PySpark and any other necessary Python packages
-# RUN pip install pyspark
-
-# Register PySpark kernel in user path (not system-wide)
+# Register PySpark kernel
 RUN /opt/conda/bin/python -m ipykernel install --user --name pyspark --display-name "PySpark"
 
-# Launch JupyterLab with no token/password
+# Launch JupyterLab without token
 CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--allow-root", "--no-browser", "--NotebookApp.token=''", "--NotebookApp.password=''"]
